@@ -223,14 +223,133 @@ SELECT
 
 --SQRT--
 -- N 값의 루트값을 구함. N은 양수여야함 
+
+-----------------------------------------------------------------
+
+---------------------- 사용자 조건 입력 받아 출력하기 ------------
+
+-- 사용자 조건 입력 받기 --
+
+SELECT
+      NAME, ID, PASS, STUDENT_ID
+  FROM HANBIN_TABLE_FIRST
+ WHERE STUDENT_ID = &STUDENT;
  
+ ------------------------------------------------------------------
+ 
+ ---------------- 데이터 정렬하기 ---------------------------------
+ 
+ -- 정렬하기 --
+
+SELECT
+      NAME, ID, STUDENT_ID 
+  FROM HANBIN_TABLE_FIRST
+ ORDER BY ID;
+ 
+ -----------------------------------------------------------------
+ 
+ ----------------- 집합연산자 ------------------------------------
+ 
+ -- 합집합(UNION(ALL)) -- 
+ 
+ SELECT *
+ FROM HANBIN_TABLE_FIRST
+ --조건절 사용 가능 WHERE ID = 'SUNG'
+ UNION
+ 
+ SELECT *
+ FROM HANBIN_TABLE_FIRST;
+ --조건절 사용 가능 WHERE ID = 'HAN'
+ 
+  SELECT *
+ FROM HANBIN_TABLE_FIRST
+ --조건절 사용 가능 WHERE ID = 'SUNG'
+ UNION ALL
+ 
+ SELECT *
+ FROM HANBIN_TABLE_FIRST;
+ --조건절 사용 가능 WHERE ID = 'HAN'
+ 
+ -- 교집합(INTERSECT) --
+ 
+ SELECT NAME
+   FROM HANBIN_TABLE_FIRST
+-- 사용가능 WHERE STUDENT_ID = '2016500'
+
+INTERSECT
+
+SELECT NAME
+FROM HANBIN_TABLE_FIRST;
+-- 사용가능 WHERE STUDENT_ID = '2016520'
+
+-- 차집합(MINUS) --
+
+ SELECT NAME
+   FROM HANBIN_TABLE_FIRST
+-- 사용가능 WHERE STUDENT_ID = '2016500'
+
+MINUS
+
+SELECT NAME
+FROM HANBIN_TABLE_FIRST;
+-- 사용가능 WHERE STUDENT_ID = '2016520'
+
+----------------- 연산자 리스트 --------------------------------
+
+-- BETWEEN a AND b --
+
+-- a 와 b 사이에 있는 범위 값 모두 검색
+
+SELECT NAME
+FROM HANBIN_TABLE_FIRST
+WHERE NEME BETWEEN 1 AND 10;
+
+-- IN(a,b,C) --
+
+-- a 이거나 B 이거나 C 인 조건을 검색(다양한 조건을 AND 를 쓰지않고 한번에)
+
+SELECT NAME
+FROM HANBIN_TABLE_FIRST
+WHERE NEME IN(1,2,10);
+
+-- LIKE --
+
+-- 특정 패턴을 가지고 있는 조건을 검색
+
+SELECT NAME
+FROM HANBIN_TABLE_FIRST
+WHERE NAME LIKE 'HANBIN';
+
+-- IS NULL / IS NOT NULL --
+
+-- NULL 값을 검색 / NULL 이 아닌 값을 검색
+
+SELECT NAME
+FROM HANBIN_TABLE_FIRST
+WHERE NAME IS NULL;
+
+-- != a --
+
+-- a 가 아닌 모든 조건을 검색
+
+SELECT NAME
+FROM HANBIN_TABLE_FIRST
+WHERE NAME != 'SUNG';
+
+--------------------------------------------------------------
+
+  
 
 
 
 
 
 
-      
+
+
+
+
+
 
 
 
