@@ -106,7 +106,101 @@ SELECT
 --SQRT--
 -- N 값의 루트값을 구함. N은 양수여야함 
 
+
 -----------------------------------------------------------------
+
+
+--//////////////////// 날짜 함수 //////////////////////////////
+
+-- SYSDATE --
+-- 시스템 현재 날짜/시간 
+SELECT 
+      SYSDATE
+  FROM DUAL;
+
+-- NEXT_DAY --
+-- 다음요일 출력
+-- 현시간을 기준으로 요일 이 지났다면 다음주 날짜를 / 지난 요일 이아니라면 그주 요일을 
+-- 일 /1,월/2,화/3,수/4,목/5,금/6,토/7
+
+SELECT 
+      NEXT_DAY(SYSDATE,7)
+  FROM DUAL;
+
+-- LAST_DAY --
+-- 속한 달의 마지막 날짜 
+
+SELECT 
+      LAST_DAY(SYSDATE)
+  FROM DUAL;
+  
+-- YYYY년도,MM달,WW주차,DD일
+-- TO_CHAR 는 날짜의 데이터 형태는 DATE 형태이기 때문에 문자(CHAR)로 바꾸어 준다
+-- DATE 형변환에 대한 자세한 설명은 ONE NOTE '날짜함수'로 검색 
+SELECT TO_CHAR(SYSDATE-7, 'YYYYWW')
+--시스템 날짜로 부터 7일전 주차
+,TO_CHAR(SYSDATE, 'YYYYWW')
+-- 시스템 현재 주차
+,TO_CHAR(SYSDATE-30, 'YYYYMMDD')
+,TO_CHAR(SYSDATE, 'YYYYMMDD')
+,TO_CHAR(SYSDATE-1, 'YYYYMMDD')
+FROM DUAL;
+
+
+--///////////////////// 일반함수 ////////////////////////////////
+
+-- NVL --
+--NULL 값을 만나면 다른값으로 치환
+SELECT 
+      NVL(PASS,'56448Q')
+  FROM HANBIN_TABLE_FIRST;
+  
+-- NVL --
+-- NULL이 아닐경우 A NULL일 경우 B 로 치환
+SELECT 
+      NVL2(PASS,'56448Q','90903A')
+  FROM HANBIN_TABLE_FIRST;
+  
+
+
+
+
+
+
+
+-------------------------------------------------------------------
+-- 테이블에 다중INSERT 하는 방법1
+-- 하나의 테이블도 가능하지만 한번에 다중 테이블 추가도 가능하다 
+
+INSERT ALL
+INTO HANBIN_TABLE_FIRST VALUES('Deliesselia','DEL','12345',20151254)
+INTO HANBIN_TABLE_LOGIN VALUES('DELISEA','SEA','123AA',2015113)
+SELECT * FROM DUAL;
+-- SELECT * FROM DUAL 을꼭써줘야 한다 
+
+-- 하나의 테이블에 다중INSELT 하는 방법2
+INSERT INTO HANBIN_TABLE_FIRST(NAME,ID,PASS,STUDENT_ID)
+SELECT 'SIMONS','ONS',NULL,20151297 FROM DUAL;
+SELECT 'DELIZA','LI','56434DF5',20151299 FROM DUAL UNION ALL
+SELECT 'DELMON','MON','56434FGF5',20151296 FROM DUAL UNION ALL
+SELECT 'DELMON','MON','56434FGF5',NULL FROM DUAL UNION ALL
+SELECT 'COTY','CO','56434DFJF5',20151298 FROM DUAL;
+-- 블로그 사람의 설명으로는 1번방법은 여러개으 테이블에 따로따로 입력하게 되는것 
+-- 이므로 1개 행씩 따로 명령을 주는것과 동일 하여 속도가 느리기 때문에 방법2 을 추천 했다
+
+
+
+
+ALTER TABLE HANBIN_TABLE_FIRST MODIFY (NAME VARCHAR2(20));
+SELECT*FROM ALL_TAB_COLUMNS WHERE TABLE_NAME = 'HANBIN_TABLE_FIRST';
+SELECT*FROM ALL_OBJECTS WHERE OBJECT_NAME LIKE 'HANBIN_TABLE_FIRST';
+
+SELECT*FROM HANBIN_TABLE_FIRST;
+ALTER TABLE HANBIN_TABLE_FIRST
+ADD CONSTRAINT FK_HANBIN_TABLE_FIRST FOREIGN KEY(ID,PASS) 
+REFERENCES HANBIN_TABLE_LOGIN(ID,PASS)
+
+
         
       
   
