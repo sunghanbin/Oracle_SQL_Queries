@@ -160,16 +160,80 @@ SELECT
 SELECT 
       NVL2(PASS,'56448Q','90903A')
   FROM HANBIN_TABLE_FIRST;
+
+-- CASE --
+-- 조건에 맞는 경우 WHEN절 값으로 치환
+SELECT
+      STUDENT_ID,
+      CASE WHEN STUDENT_ID<20151296 THEN 2020
+           WHEN STUDENT_ID>201650250 AND STUDENT_ID<20151299 THEN 123
+            ELSE 3000 END AS STUDENT_ID
+FROM HANBIN_TABLE_FIRST;
+
+
+-- DECODE (SWITCH CASE) 과 같음 
+SELECT A.*
+      ,DECODE(A.ID,'DEL',1,'SEA',2,3) AS NUM
+      FROM HANBIN_TABLE_FIRST A
+ WHERE 1=1
+ ORDER BY NUM;
+  
+-------------------------------------------------------------------
+
+
+--/////////////////////////// 집계함수 /////////////////////////////
+
+-- COUNT --
+
+-- 주어진 자료 집계 단위의 건수를 출력함
+
+SELECT 
+      COUNT(NAME)
+  FROM HANBIN_TABLE_FIRST;
+  
+-- SUM --
+
+-- 주어진 자료 집계 단위의 합계를 출력함
+
+SELECT 
+      SUM(STUDENT_ID)
+  FROM HANBIN_TABLE_FIRST;
+  
+-- AVG --
+
+-- 주어진 자료 집계 단위의 평균을 출력함
+
+SELECT 
+      AVG(STUDENT_ID)
+  FROM HANBIN_TABLE_FIRST;
+
+-- MIN/MAX --
+
+-- 주어진 자료 집계 단위의 최대/최소값을 출력함
+
+SELECT 
+      MAX(STUDENT_ID)
+  FROM HANBIN_TABLE_FIRST;
   
 
+--//// GROUP BY ///////
+
+SELECT
+      ID
+      ,NAME
+      ,AVG(STUDENT_ID)
+  FROM HANBIN_TABLE_FIRST
+-- WHERE 가능
+GROUP BY ID,NAME
+HAVING AVG(STUDENT_ID) > 201650222-- HAVING 조건절(집계)
+ORDER BY ID,NAME;
+
+---------------------------------------------------------------------------
 
 
 
-
-
-
--------------------------------------------------------------------
 -- 테이블에 다중INSERT 하는 방법1
+
 -- 하나의 테이블도 가능하지만 한번에 다중 테이블 추가도 가능하다 
 
 INSERT ALL
@@ -178,38 +242,20 @@ INTO HANBIN_TABLE_LOGIN VALUES('DELISEA','SEA','123AA',2015113)
 SELECT * FROM DUAL;
 -- SELECT * FROM DUAL 을꼭써줘야 한다 
 
+
 -- 하나의 테이블에 다중INSELT 하는 방법2
+
 INSERT INTO HANBIN_TABLE_FIRST(NAME,ID,PASS,STUDENT_ID)
 SELECT 'SIMONS','ONS',NULL,20151297 FROM DUAL;
 SELECT 'DELIZA','LI','56434DF5',20151299 FROM DUAL UNION ALL
 SELECT 'DELMON','MON','56434FGF5',20151296 FROM DUAL UNION ALL
 SELECT 'DELMON','MON','56434FGF5',NULL FROM DUAL UNION ALL
 SELECT 'COTY','CO','56434DFJF5',20151298 FROM DUAL;
--- 블로그 사람의 설명으로는 1번방법은 여러개으 테이블에 따로따로 입력하게 되는것 
+
+-- 블로그 사람의 설명으로는 1번방법은 여러개의 테이블에 따로따로 입력하게 되는것 
 -- 이므로 1개 행씩 따로 명령을 주는것과 동일 하여 속도가 느리기 때문에 방법2 을 추천 했다
 
 
-
-
-ALTER TABLE HANBIN_TABLE_FIRST MODIFY (NAME VARCHAR2(20));
-SELECT*FROM ALL_TAB_COLUMNS WHERE TABLE_NAME = 'HANBIN_TABLE_FIRST';
-SELECT*FROM ALL_OBJECTS WHERE OBJECT_NAME LIKE 'HANBIN_TABLE_FIRST';
-
-SELECT*FROM HANBIN_TABLE_FIRST;
-ALTER TABLE HANBIN_TABLE_FIRST
-ADD CONSTRAINT FK_HANBIN_TABLE_FIRST FOREIGN KEY(ID,PASS) 
-REFERENCES HANBIN_TABLE_LOGIN(ID,PASS)
-
-
-        
-      
-  
-  
-  
-
-      
-
-  
 
 
 
