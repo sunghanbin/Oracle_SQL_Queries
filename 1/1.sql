@@ -1,8 +1,7 @@
 -- 테이블 조회 --
--- select * from {테이블명}
+select * from HANBIN_TABLE_FIRST;
 
 SELECT * FROM TABS;
-
 
 --TNSNAME 설정  //자세한 설명은 ONE NOTE 기록함--
 /*{서버별칭} = 
@@ -70,17 +69,81 @@ DROP TABLE HANBIN_TABLE_SECOND;
 
 --------------------------------------------------
 
+
+
+--------------------- 컬럼 --------------------------
+
+-- 컬럼 추가 
+
+ALTER TABLE HANBIN_TABLE_FIRST ADD TEST NUMBER;
+
+-- 컬럼 수정
+
+ALTER TABLE HANBIN_TABLE_FIRST MODIFY TEST VARCHAR(10);
+
+-- 컬럼 삭제 
+
+ALTER TABLE HANBIN_TABLE_FIRST DROP COLUMN TEST;
+
+-- 컬럼 이름 변경
+
+ALTER TABLE HANBIN_TABLE_FIRST RENAME COLUMN TEST TO SCORE;
+
+-- 컬럼 정보 조회
+
+SELECT * FROM ALL_TAB_COLUMNS WHERE TABLE_NAME = 'HANBIN_TABLE_FIRST'; 
+
+-------------------------------------------------------
+
+
+
 ------------------ 데이터 ---------------------------
  
- --데이터 삽입--
+ ------------ 데이터 삽입 ----------
+ 
  INSERT INTO HANBIN_TABLE_FIRST
  VALUES ('HANBIN','SUNG','77777',201650250);
+ 
+ -- 테이블에 다중INSERT 하는 방법1
 
- --데이터 업데이트(기존데이터 변경)--
+-- 하나의 테이블도 가능하지만 한번에 다중 테이블 추가도 가능하다 
+
+INSERT ALL
+INTO HANBIN_TABLE_FIRST VALUES('Deliesselia','DEL','12345',20151254)
+INTO HANBIN_TABLE_LOGIN VALUES('DELISEA','SEA','123AA',2015113)
+SELECT * FROM DUAL;
+-- SELECT * FROM DUAL 을꼭써줘야 한다 
+
+
+-- 하나의 테이블에 다중INSELT 하는 방법2
+
+INSERT INTO HANBIN_TABLE_FIRST(NAME,ID,PASS,STUDENT_ID)
+SELECT 'SIMONS','ONS',NULL,20151297 FROM DUAL;
+SELECT 'DELIZA','LI','56434DF5',20151299 FROM DUAL UNION ALL
+SELECT 'DELMON','MON','56434FGF5',20151296 FROM DUAL UNION ALL
+SELECT 'DELMON','MON','56434FGF5',NULL FROM DUAL UNION ALL
+SELECT 'COTY','CO','56434DFJF5',20151298 FROM DUAL;
+
+-- 블로그 사람의 설명으로는 1번방법은 여러개의 테이블에 따로따로 입력하게 되는것 
+-- 이므로 1개 행씩 따로 명령을 주는것과 동일 하여 속도가 느리기 때문에 방법2 을 추천 했다
+
+
+-------- 데이터 업데이트(기존데이터 변경) ----------
+ 
  UPDATE HANBIN_TABLE_FIRST
  SET STUDENT_ID = 201650255
  WHERE 1=1
  AND STUDENT_ID = 201650250;
+ 
+ ------ 데이터 삭제 -------
+ 
+ DELETE FROM HANBIN_TABLE_FIRST WHERE PASS = '56434DFJF5';
+ 
+ 
+ -- 모든 행 삭제
+ DELETE FROM HANBIN_TABLE_FIRST;
+ 
+ 
  
 
  --데이터 IMPORT 하기 ONE NOTE 기록
@@ -123,6 +186,9 @@ DROP TABLE HANBIN_TABLE_SECOND;
  -- DEFAULT 상단의 두가지 기능들을 사라지게 만든다. 기본값
  
  --------------------------------------------
+ 
+ 
+ 
  
  ------------------ 관계대수 ----------------
  
