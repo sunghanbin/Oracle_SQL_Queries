@@ -231,6 +231,43 @@ ORDER BY ID,NAME;
 ---------------------------------------------------------------------------
 
 
+--////////////////////// PIVOT,UNPIVOT ///////////////////////
+
+-- PIVOT 
+-- 행을 열로 
+
+SELECT * FROM DT_RESULT_FINAL2
+ORDER BY PRODUCTGROUP,PRODUCT,ITEM,YEARWEEK,MEASURE;
+
+
+SELECT 
+    *
+     FROM (
+     SELECT REGIONID, PRODUCT, WEEK, ROUND(AVG(QTY),0) AS QTY_AVG
+     FROM KOPO_CHANNEL_SEASONALITY
+     GROUP BY REGIONID, PRODUCT, WEEK
+     ORDER BY REGIONID,WEEK,PRODUCT DESC
+     )
+ PIVOT( SUM(QTY_AVG) FOR WEEK IN ('1','2','3','4','5','6'));
+ 
+ 
+ 
+ -------------------------------------------------------------------------
+ 
+ 
+ WITH T AS( 
+    SELECT * FROM DT_RESULT_FINAL3
+)
+SELECT MEASURE, PRODUCTGROUP, PRODUCT, ITEM, YEARWEEK, QTY FROM T
+UNPIVOT(QTY FOR MEASURE IN(REAL_QTY, PREDICTION_QTY))
+
+
+
+
+
+
+
+
 
 
 
